@@ -10,11 +10,8 @@ function scroll_to_bottom () {
     var new_message_height = new_message.innerHeight();
     var last_message_height = new_message.prev().innerHeight();
 
-    console.log(client_height, scroll_top, new_message_height, last_message_height, scroll_height);
-
     if (client_height + scroll_top + new_message_height + last_message_height >= scroll_height) {
         messages.scrollTop(scroll_height);
-        console.log(client_height + scroll_top + new_message_height + last_message_height);
     };
 };
 
