@@ -37,12 +37,21 @@ io.on('connection', (socket) => {
     })
 
     socket.on('createMessage', (message, callback) => {
-        io.emit('newMessage', generate_message(message.from, message.text));
+        var user = users.get_user(socket.id);
+
+        if (user && is_real_string(message.text)) {
+            io.to(user.room).emit('newMessage', generate_message(user.name, message.text));
+        };
+
         callback();
     });
 
     socket.on('createLocationMessage', (coords) => {
-        io.emit('newLocationMessage', generate_location_message('Admin', coords.latitude, coords.longitude));
+        var user = users.get_user(socket.id);
+
+        if (user) {
+            io.to(user.room).emit('newLocationMessage', generate_location_message(user.name, coords.latitude, coords.longitude));
+        };
     })
 
     socket.on('disconnect', () => {
@@ -53,7 +62,7 @@ io.on('connection', (socket) => {
         if(user) {
             io.to(user.room).emit('updateUserList', users.get_user_list(user.room));
             io.to(user.room).emit('newMessage', generate_message('Admin', `${user.name} has left the chat room`));
-            
+
         }
     });
 });
