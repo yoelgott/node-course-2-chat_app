@@ -30,20 +30,3 @@ class Users {
 };
 
 module.exports = {Users};
-
-var users = new Users();
-
-users.add_user(1, 'yoel', '2');
-users.add_user(2, 'noam', '1');
-users.add_user(3, 'itai', '1');
-
-console.log(users.get_user_list('1'));
-
-var u = users.remove_user(3);
-console.log(u);
-
-console.log(users.get_user_list('1'));
-
-console.log(users.get_user(1));
-
-console.log(users);
